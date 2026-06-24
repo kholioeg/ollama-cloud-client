@@ -1,0 +1,56 @@
+[package]
+name = "ollama-cloud-client"
+version = "0.1.0"
+edition = "2021"
+authors = ["kholioeg"]
+description = "Desktop client for Ollama Cloud LLMs"
+
+[[bin]]
+name = "ollama-cloud-client"
+path = "src/main.rs"
+
+[dependencies]
+# Async runtime
+tokio = { version = "1.40", features = ["full"] }
+
+# HTTP client
+reqwest = { version = "0.12", features = ["json", "stream"] }
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Logging
+log = "0.4"
+env_logger = "0.11"
+
+# Error handling
+thiserror = "1.0"
+anyhow = "1.0"
+
+# Config management
+dotenv = "0.15"
+
+# Database (for local storage)
+sqlx = { version = "0.8", features = ["runtime-tokio-native-tls", "sqlite"] }
+uuid = { version = "1.0", features = ["v4", "serde"] }
+
+# UI - Tauri (optional for MVP, can comment out initially)
+# tauri = { version = "1.7", features = ["shell-open"] }
+# serde_repr = "0.1"
+
+# Utilities
+chrono = { version = "0.4", features = ["serde"] }
+futures = "0.3"
+dirs = "5.0"
+
+[dev-dependencies]
+tokio-test = "0.4"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+
+[profile.dev]
+opt-level = 0
